@@ -42,7 +42,7 @@ static void install(int sig)
         // 4 means to remove 4 stack frames: this way the backtrace starts at the point where
         // the signal reception interrupted the normal program flow
         // crashHandler(buffer, 4);
-        crashHandler(buffer, 0);
+        crashLoger(buffer, 0);
     };
 
 #if defined(Q_OS_UNIX)
@@ -115,7 +115,7 @@ static void initBacktrace()
         if (!type)
         {
             // 3 means to remove 3 stack frames: this way the backtrace starts at std::terminate
-            crashHandler("terminate was called although no exception was thrown", 3);
+            crashLoger("terminate was called although no exception was thrown", 3);
         }
 
         const char *typeName = type->name();
@@ -143,7 +143,7 @@ static void initBacktrace()
         }
 
         // 4 means to remove 4 stack frames: this way the backtrace starts at std::terminate
-        crashHandler(buffer, 4);
+        crashLoger(buffer, 4);
     });
 }
 
