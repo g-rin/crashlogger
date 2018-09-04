@@ -1,14 +1,19 @@
+#include "backtrace.h"
+#include "backtrace-supported.h"
 #include <cxxabi.h>
 #include <execinfo.h>
 #include <setjmp.h>
 #include <signal.h>
 #include <inttypes.h>
 #include <unistd.h>
-
-#include <backtrace.h>
-#include <backtrace-supported.h>
-
-#include "crashloger.h"
+#include <qglobal.h>
+#ifndef PRIxPTR
+#    if __WORDSIZE == 64
+#        define PRIxPTR "lx"
+#    else
+#        define PRIxPTR "x"
+#    endif
+#endif
 
 static bool printBacktrace;
 static bool useAnsiColor;
@@ -26,9 +31,6 @@ static void *malloc_valgrind_ignore(size_t size)
     return malloc(size);
 }
 #endif
-
-// this will make it run before all other static constructor functions
-static void initBacktrace() __attribute__((constructor(101)));
 
 static void crashLoger(const char *why, int stackFramesToIgnore) __attribute__((noreturn));
 
@@ -71,7 +73,7 @@ static void install(int sig)
 #endif
 }
 
-static void initBacktrace()
+void initCrashloger()
 {
     // This can catch and pretty-print all of the following:
 
