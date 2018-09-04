@@ -1,7 +1,8 @@
+include($${PWD}/config.pri)
 include($${PWD}/crashloger.pri)
-
-QT = core
+TEMPLATE = lib
 CONFIG += staticlib
+QT = core
 DEFINES *= _GNU_SOURCE
 
 SOURCES += \
