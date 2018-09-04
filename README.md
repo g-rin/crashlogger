@@ -6,7 +6,7 @@ It uses libbacktace of Ian Lancetaylor: https://github.com/ianlancetaylor/libbac
 
 Initialy the source (logicaly) was competely copied from the: https://github.com/kmikolaj/backtrace-test.git
 
-# Build
+# Build (with Qt 4 or 5)
 
 crashloger.pro will compile build/<debug or release>/libcrashloger.a static library
 
