@@ -52,4 +52,4 @@ The example will produce the following output:
 > Aborted (core dumped)
 
 As we can see the first four lines of the backtrace refer to the crashloger's code.
-So we skip it. The cause of crash is on RWoker::process() functions (line  started with '3:').
+So we skip them. The cause of the crash is on RWoker::process() function (line  started with '3:').
