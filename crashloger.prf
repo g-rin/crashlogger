@@ -1,2 +1,2 @@
 LIBS *= -lcrashloger
-incude($${PWD}/crashloger.pri)
+include($${PWD}/crashloger.pri)

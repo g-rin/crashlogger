@@ -1,4 +1,4 @@
-incude($${PWD}/crashloger.pri)
+include($${PWD}/crashloger.pri)
 
 QT = core
 CONFIG += staticlib
