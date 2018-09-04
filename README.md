@@ -1,6 +1,6 @@
 # About crashloger
 
-Simple library for logging stack trace of the crashed thread (at the moment it's for UNIX only).
+Simple library for logging call stack (backtrace) of the crashed thread (at the moment it's for UNIX only).
 
 It uses libbacktace of Ian Lancetaylor: https://github.com/ianlancetaylor/libbacktrace
 
