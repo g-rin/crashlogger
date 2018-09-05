@@ -1,11 +1,11 @@
 #include "emiter.h"
 #include "runner.h"
-#include <crashloger.h>
+#include <crashlogger.h>
 #include <QApplication>
 #include <QMainWindow>
 
 int main( int argc, char**argv ) {
-    initCrashloger();
+    initCrashlogger();
 
     QApplication app(argc, argv);
 

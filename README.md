@@ -8,7 +8,7 @@ Initialy the source (logicaly) was competely copied from the: https://github.com
 
 # Build (with Qt 4 or 5)
 
-crashloger.pro will compile build/<debug or release>/libcrashloger.a static library
+crashlogger.pro will compile build/<debug or release>/libcrashlogger.a static library
 
 example/example.pro will compile build/<debug or release>/example application.
   
@@ -25,9 +25,9 @@ The example will produce the following output:
 >  \> why: uncaught signal 11 (Segmentation fault)
 >
 >  \> backtrace:<br/>
->    0: crashLoger [404844] in ../crashloger/src/crashloger.cpp:249<br/>
->    1: operator() [404a57] in ../crashloger/src/crashloger.cpp:47<br/>
->    1: _FUN [404a57] in ../crashloger/src/crashloger.cpp:48<br/>
+>    0: crashLoger [404844] in ../crashloger/src/crashlogger.cpp:249<br/>
+>    1: operator() [404a57] in ../crashloger/src/crashlogger.cpp:47<br/>
+>    1: _FUN [404a57] in ../crashloger/src/crashlogger.cpp:48<br/>
 >    2: (null) [7f17b50e24af]<br/>
 >    3: RWorker::process(QString const&) [403ab7] in ../example/runner.cpp:41<br/>
 >    4: QObject::event(QEvent*) [7f17b5ec9210]<br/>
@@ -51,5 +51,5 @@ The example will produce the following output:
 > 
 > Aborted (core dumped)
 
-As we can see the first four lines of the backtrace refer to crashloger's code.
+As we can see the first four lines of the backtrace refer to crashlogger's code.
 So we skip them. The cause of the crash is on RWoker::process() function (the line started by '3: RWorker...').

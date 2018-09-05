@@ -1,12 +1,12 @@
 include($${PWD}/config.pri)
-include($${PWD}/crashloger.pri)
+include($${PWD}/crashlogger.pri)
 TEMPLATE = lib
 CONFIG += staticlib
 QT = core
 DEFINES *= _GNU_SOURCE
 
 SOURCES += \
-    src/crashloger.cpp \
+    src/crashlogger.cpp \
     src/backtrace.c \
     src/simple.c \
     src/elf.c \

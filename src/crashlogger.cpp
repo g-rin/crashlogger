@@ -32,7 +32,7 @@ static void *malloc_valgrind_ignore(size_t size)
 }
 #endif
 
-static void crashLoger(const char *why, int stackFramesToIgnore) __attribute__((noreturn));
+static void writeCrashLog(const char *why, int stackFramesToIgnore) __attribute__((noreturn));
 
 static void install(int sig)
 {
@@ -44,7 +44,7 @@ static void install(int sig)
         // 4 means to remove 4 stack frames: this way the backtrace starts at the point where
         // the signal reception interrupted the normal program flow
         // crashHandler(buffer, 4);
-        crashLoger(buffer, 0);
+        writeCrashLog(buffer, 0);
     };
 
 #if defined(Q_OS_UNIX)
@@ -73,7 +73,7 @@ static void install(int sig)
 #endif
 }
 
-void initCrashloger()
+void initCrashlogger()
 {
     // This can catch and pretty-print all of the following:
 
@@ -117,7 +117,7 @@ void initCrashloger()
         if (!type)
         {
             // 3 means to remove 3 stack frames: this way the backtrace starts at std::terminate
-            crashLoger("terminate was called although no exception was thrown", 3);
+            writeCrashLog("terminate was called although no exception was thrown", 3);
         }
 
         const char *typeName = type->name();
@@ -145,11 +145,11 @@ void initCrashloger()
         }
 
         // 4 means to remove 4 stack frames: this way the backtrace starts at std::terminate
-        crashLoger(buffer, 4);
+        writeCrashLog(buffer, 4);
     });
 }
 
-static void crashLoger(const char *why, int stackFramesToIgnore)
+static void writeCrashLog(const char *why, int stackFramesToIgnore)
 {
     pid_t pid = getpid();
     char who[256];
