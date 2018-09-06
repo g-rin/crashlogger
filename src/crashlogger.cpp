@@ -24,34 +24,29 @@ static size_t demangleBufferSize;
 
 static int stackFramesLimit = 100;
 
-#if defined(Q_OS_UNIX)
-// make it clear in the valgrind backtrace that this is a deliberate leak
-static void *malloc_valgrind_ignore(size_t size)
-{
-    return malloc(size);
-}
-#endif
+static char SIGSEGV_BUFFER[SIGSTKSZ];
+static char SIGABRT_BUFFER[SIGSTKSZ];
+static char SIGFPE_BUFFER[SIGSTKSZ];
 
 static void writeCrashLog(const char *why, int stackFramesToIgnore) __attribute__((noreturn));
 
-static void install(int sig)
+static void sigHandler(int sig)
 {
-    auto sigHandler = [](int sig) {
-        // this lambda is the low-level signal handler multiplexer
-        // resetToDefault(sig);
-        static char buffer[256];
-        snprintf(buffer, sizeof(buffer), "uncaught signal %d (%s)", sig, sys_siglist[sig]);
-        // 4 means to remove 4 stack frames: this way the backtrace starts at the point where
-        // the signal reception interrupted the normal program flow
-        // crashHandler(buffer, 4);
-        writeCrashLog(buffer, 0);
-    };
+    // this lambda is the low-level signal handler multiplexer
+    // resetToDefault(sig);
+    static char buffer[256];
+    snprintf(buffer, sizeof(buffer), "uncaught signal %d (%s)", sig, sys_siglist[sig]);
+    // 3 means to remove 3 stack frames: this way the backtrace starts at the point where
+    // the signal reception interrupted the normal program flow
+    writeCrashLog(buffer, 3);
+}
 
+static void install(int sig, char*const buffer)
+{
 #if defined(Q_OS_UNIX)
     // Use alternate signal stack to get backtrace for stack overflow
     stack_t sigstack;
-    sigstack.ss_sp =
-        malloc_valgrind_ignore(SIGSTKSZ);  // valgrind will report this as leaked: nothing we can do about it
+    sigstack.ss_sp = buffer;
     sigstack.ss_size = SIGSTKSZ;
     sigstack.ss_flags = 0;
     sigaltstack(&sigstack, nullptr);
@@ -106,9 +101,9 @@ void initCrashlogger()
 
     // handling signals
     //{ SIGFPE, SIGSEGV, SIGILL, SIGBUS, SIGPIPE, SIGABRT },
-    install(SIGSEGV);
-    install(SIGABRT);
-    install(SIGFPE);
+    install(SIGSEGV, SIGSEGV_BUFFER );
+    install(SIGABRT, SIGABRT_BUFFER);
+    install(SIGFPE, SIGFPE_BUFFER);
 
     std::set_terminate([]() {
         static char buffer[1024];
