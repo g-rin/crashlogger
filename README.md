@@ -1,20 +1,14 @@
 # About crashloger
 
-Simple library for logging call stack (backtrace) of the crashed thread (at the moment it's for UNIX only).
+Simple library for logging call stack (backtrace) of the crashed thread.
 
 It uses libbacktace of Ian Lancetaylor: https://github.com/ianlancetaylor/libbacktrace
 
-Initialy the source (logicaly) was competely copied from the: https://github.com/kmikolaj/backtrace-test.git
+Initialy the source (logicaly) was competely copied from the: https://github.com/kmikolaj/backtrace-test
 
-# Build (with Qt 4 or 5)
+Example's files were moved to external repository //https://github.com/g-rin/crashlogger_example
 
-crashlogger.pro will compile build/<debug or release>/libcrashlogger.a static library
-
-example/example.pro will compile build/<debug or release>/example application.
-  
-# Example
-
-The example will produce the following output:
+#The example will produce the following output:
 
 > QThread(0x16f2550, name = "emiter thread") eworker dowork:  "QtnBjsMqXD"<br/>
 > QThread(0x15ba7a0, name = "gui thread") emiter handleresults:  "QtnBjsMqXD"<br/>
