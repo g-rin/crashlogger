@@ -1,10 +1,7 @@
 #include "backtrace.h"
 #include "backtrace-supported.h"
 #include <cxxabi.h>
-#include <execinfo.h>
-#include <setjmp.h>
 #include <signal.h>
-#include <inttypes.h>
 #include <unistd.h>
 #include <qglobal.h>
 #ifndef PRIxPTR
